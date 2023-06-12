@@ -1,5 +1,10 @@
 "use client";
 import {usePathname} from "next/navigation"
+import { useMemo } from "react";
+import { HiHome, HiSearch } from "react-icons/hi"
+import Box from "./Box";
+import SidebarItem from "./SidebarItem";
+import Library from "./Library";
 
 interface SidebarProps {
     children: React.ReactNode;
@@ -8,11 +13,44 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({children}) => {
 
     const pathname = usePathname();
+
+    //creating array of the possible routes in the project
+
+    const routes = useMemo(() => [
+        {
+            icon: HiHome,
+            label: 'Home',
+            active: pathname !== 'search',
+            href: '/'
+        },
+        {
+            icon: HiSearch,
+            label: 'Search',
+            active: pathname === '/search',
+            href: '/search'
+        },
+
+    ], [pathname]);
+
+
     return (  
-        <div>
-            {children}
-        </div>
+            
+            <div className="flex h-full">
+                <div className="hidden md:flex flex-col gap-y-2 bg-black h-full w-[300px] p-2">
+                    <Box className="flex flex-col gap-y-4 px-5 py-4">
+                        {routes.map((item) => (
+                            <SidebarItem key={item.label} {...item} />
+                        ))}
+                    </Box>
+                    <Box className="overflow-y-auto h-full">
+                        <Library/> 
+                    </Box>
+                </div>
+                <main className="h-full flex-1 overflow-y-auto py-2">
+                    {children}
+                </main>
+            </div>
     );
 }
  
-export default Sidebar;
+export default Sidebar; 
