@@ -3,8 +3,8 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 const url = 'https://shazam.p.rapidapi.com/shazam-events/list?artistId=73406786&l=en-US&from=2022-12-31&limit=50&offset=0';
  
 
-export const shazamCoreApi = createApi({
-    reducerPath: 'shazamCoreApi',
+export const shazamApi = createApi({
+    reducerPath: 'shazamApi',
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://shazam.p.rapidapi.com',
         prepareHeaders: (headers) => {
@@ -21,4 +21,4 @@ export const shazamCoreApi = createApi({
 
 export const {
     useGetTopChartsQuery,
-} = shazamCoreApi;
+} = shazamApi;
