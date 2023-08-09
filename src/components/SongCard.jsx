@@ -55,3 +55,4 @@ const SongCard = ({ song, i, isPlaying, activeSong, data }) => {
 )};
 
 export default SongCard;
+
