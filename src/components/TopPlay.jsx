@@ -56,7 +56,7 @@ const TopPlay = () => {
   });
 
   const topPlays = top_tracks?.slice(0, 5);
-  console.log(topPlays.slice(0,5))
+  // console.log(topPlays.slice(0,5))
 
   const handlePauseClick = () => {
     dispatch(playPause(false));
@@ -95,7 +95,7 @@ const TopPlay = () => {
       <div className="w-full flex flex-col mt-8">
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-white font-bold text-2xl">Top Artists</h2>
-          <Link to="/top-artists">
+          <Link to="/top-artists"> 
             <p className="text-gray-300 text-base cursor-pointer">See more</p>
           </Link>
         </div>
