@@ -18,7 +18,7 @@ const Discover = () => {
 
     // const songs = data.tracks;
     const tracks = data?.tracks || [];
-    console.log(tracks);
+    // console.log(tracks);
 
     // console.log(isFetching);
     // console.log(error);

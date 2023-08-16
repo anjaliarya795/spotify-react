@@ -14,12 +14,13 @@ const CountryTracks = () => {
   
     useEffect(() => {
       axios
-        .get(`https://geo.ipify.org/api/v2/country?apiKey=${import.meta.env.VITE_GEO_API_KEY}`)
+        .get(`https://geo.ipify.org/api/v2/country?apiKey=at_ZB37alH0DVFxNsmn60KZOj02n7tu7&ipAddress=8.8.8.8`)
         .then((res) => setCountry(res?.data?.location.country))
         .catch((err) => console.log(err))
         .finally(() => setLoading(false));
     }, [country]);
   
+    console.log(country)
     if (isFetching && loading) return <Loader title="Loading Songs around you..." />;
   
     if (error && country !== '') return <Error />;
@@ -39,6 +40,7 @@ const CountryTracks = () => {
               i={i}
             />
           ))}
+          hello
         </div>
       </div>
     );

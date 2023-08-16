@@ -1,23 +1,28 @@
 import { useParams } from 'react-router-dom';
 import  { useSelector, useDispatch } from 'react-redux';
-import { DetailsHeader, Header, loader, RelatedSongs } from '../components';
+import { DetailsHeader, Error, Loader, RelatedSongs } from '../components';
 
 import { setActiveSong, playPause } from '../redux/features/playerSlice';
+
+import { useGetSongDetailsQuery, useGetSongRelatedQuery } from '../redux/services/shazamCore';
 
 
 const SongDetails = () => {
 
     const dispatch = useDispatch();
-    const { songid } = useParams();
+    const { songid, id: artistId } = useParams();
     const { activeSong, isplaying } = useSelector((state) => state.player);
 
-    // console.log(songid);
+    console.log(songid);
     const { data, isFetching: isFetchinRelatedSongs, error } = useGetSongRelatedQuery({ songid });
+
+    // if (error || !data?.songs[0]) return <Error />;
     const { data: songData, isFetching: isFetchingSongDetails } = useGetSongDetailsQuery({ songid });
   
     if (isFetchingSongDetails && isFetchinRelatedSongs) return <Loader title="Searching song details" />;
   
-    console.log(songData);
+    // console.log(songData);
+    console.log(data)
   
     if (error) return <Error />;
   
@@ -44,23 +49,27 @@ const SongDetails = () => {
                 <div className="mt-5">
                 {songData?.sections[1].type === 'LYRICS'
                     ? songData?.sections[1]?.text.map((line, i) => (
-                    <p key={`lyrics-${line}-${i}`} className="text-gray-400 text-base my-1">{line}</p>
+                    <p key={`lyrics-${line}-${i}`} className="text-gray-400 text-base my-1">{line}
+                    {/* {console.log(`Key: lyrics-${line}-${i}`)} */}
+                    </p>
                     ))
                     : (
                     <p className="text-gray-400 text-base my-1">Sorry, No lyrics found!</p>
                     )}
                 </div>
+
             </div>
 
-            <RelatedSongs
+           {
+            data?.tracks?.length ? <RelatedSongs
                 data={data}
                 artistId={artistId}
-                isPlaying={isPlaying}
+                isPlaying={isplaying}
                 activeSong={activeSong}
                 handlePauseClick={handlePauseClick}
                 handlePlayClick={handlePlayClick}
-            />
-
+            /> : null
+            }
         </div>
     )
 };
