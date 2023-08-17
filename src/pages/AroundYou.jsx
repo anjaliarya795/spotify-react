@@ -14,23 +14,30 @@ const CountryTracks = () => {
   
     useEffect(() => {
       axios
-        .get(`https://geo.ipify.org/api/v2/country?apiKey=at_ZB37alH0DVFxNsmn60KZOj02n7tu7&ipAddress=8.8.8.8`)
+        .get(`https://geo.ipify.org/api/v2/country?apiKey=at_ZB37alH0DVFxNsmn60KZOj02n7tu7`)
         .then((res) => setCountry(res?.data?.location.country))
         .catch((err) => console.log(err))
         .finally(() => setLoading(false));
     }, [country]);
-  
-    console.log(country)
+
+//   console.log(isFetching)
+//   console.log(error)
+
+    // console.log(country)
+
+
     if (isFetching && loading) return <Loader title="Loading Songs around you..." />;
   
     if (error && country !== '') return <Error />;
   
     return (
       <div className="flex flex-col">
-        <h2 className="font-bold text-3xl text-white text-left mt-4 mb-10">Around you <span className="font-black">{country}</span></h2>
+        <h2 className="font-bold text-3xl text-white text-left mt-4 mb-10">Around you 
+        {/* <span className="font-black">{country}</span> */}
+        </h2>
   
         <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-          {data?.map((song, i) => (
+          {data?.tracks?.map((song, i) => (
             <SongCard
               key={song.key}
               song={song}
@@ -40,7 +47,6 @@ const CountryTracks = () => {
               i={i}
             />
           ))}
-          hello
         </div>
       </div>
     );
